@@ -15,5 +15,10 @@ interface LeadsProcessingInterface
      * @return array
      */
     public function process(Lead $lead): array;
+
+    /**
+     * @param array
+     */
+    public function closeAllProcess(array $descrsiptsAndPipes): void;
 }
 

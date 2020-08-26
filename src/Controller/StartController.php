@@ -30,28 +30,6 @@ class StartController
             $descrsiptsAndPipes[] = $this->leadsProcessing->process($lead);
         }
         
-        $this->closeAllProcess($descrsiptsAndPipes);
-    }
-
-    /**
-     * @param array
-     */
-    private function closeAllProcess(array $descrsiptsAndPipes): void
-    {
-        foreach ($descrsiptsAndPipes as $key) {
-
-            $pipes = $key['pipes'];
-            $process = $key['process'];
-            $meta_info = proc_get_status($process);
-
-            foreach ($pipes as $pipe) {
-                if (is_resource($pipe)) {
-                fclose($pipe);
-                }
-            }
-            
-            $exit_code = proc_close($process);
-            $exit_code = $meta_info['running'] ? $exit_code : $meta_info['exitcode'];
-        }
+        $this->leadsProcessing->closeAllProcess($descrsiptsAndPipes);
     }
 }

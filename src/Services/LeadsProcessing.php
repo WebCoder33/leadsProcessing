@@ -38,6 +38,28 @@ class LeadsProcessing implements LeadsProcessingInterface
     }
 
     /**
+     * @param array
+     */
+    public function closeAllProcess(array $descrsiptsAndPipes): void
+    {
+        foreach ($descrsiptsAndPipes as $key) {
+
+            $pipes = $key['pipes'];
+            $process = $key['process'];
+            $meta_info = proc_get_status($process);
+
+            foreach ($pipes as $pipe) {
+                if (is_resource($pipe)) {
+                fclose($pipe);
+                }
+            }
+            
+            $exit_code = proc_close($process);
+            $exit_code = $meta_info['running'] ? $exit_code : $meta_info['exitcode'];
+        }
+    }
+
+    /**
      * @param Lead
      * @return string
      */
