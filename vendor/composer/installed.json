@@ -1,0 +1,36 @@
+[
+    {
+        "name": "vladimir163/lead-generator",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vladimir163/lead-generator.git",
+            "reference": "9a9992de6cf66c3fd4ac3b22688763f8dee5ab72"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vladimir163/lead-generator/zipball/9a9992de6cf66c3fd4ac3b22688763f8dee5ab72",
+            "reference": "9a9992de6cf66c3fd4ac3b22688763f8dee5ab72",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=7"
+        },
+        "time": "2020-07-30T07:43:33+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "LeadGenerator\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Vladimir Samuylov",
+                "email": "vladimir@samujlov.ru"
+            }
+        ]
+    }
+]

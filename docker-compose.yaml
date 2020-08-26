@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  php-fpm:
+    image: webdevops/php-dev:7.4
+    hostname: php-fpm
+    restart: "always"
+    environment:
+      COMPOSER_MEMORY_LIMIT: -1
+    volumes:
+      - ./:/app
+    working_dir: /app
+
+  nginx:
+    image: webdevops/nginx
+    hostname: nginx
+    restart: "always"
+    environment:
+      WEB_DOCUMENT_ROOT: /app
+      WEB_DOCUMENT_INDEX: index.php
+      WEB_PHP_SOCKET: php-fpm:9000
+    ports:
+      - "8003:80"
+    volumes:
+      - ./:/app
+    depends_on:
+      - php-fpm
