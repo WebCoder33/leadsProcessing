@@ -13,7 +13,7 @@ class StartController
     /**
      * @param LeadsProcessingInterface
      */
-    private $leadsProcessing;
+    private LeadsProcessingInterface $leadsProcessing;
 
     public function __construct(LeadsProcessingInterface $leadsProcessing)
     {
@@ -25,11 +25,11 @@ class StartController
      */
     public function start(array $leadsArray): void
     {   
-        $descrsiptsAndPipes = [];
+        $decryptsAndPipes = [];
         foreach ($leadsArray as $lead) {
-            $descrsiptsAndPipes[] = $this->leadsProcessing->process($lead);
+            $decryptsAndPipes[] = $this->leadsProcessing->process($lead);
         }
         
-        $this->leadsProcessing->closeAllProcess($descrsiptsAndPipes);
+        $this->leadsProcessing->closeAllProcess($decryptsAndPipes);
     }
 }

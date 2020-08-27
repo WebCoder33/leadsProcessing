@@ -10,7 +10,7 @@ use LeadGenerator\Lead;
  */
 class LeadsProcessing implements LeadsProcessingInterface
 {
-    public const ASSYNC_SCRIPT = '/app/src/Scripts/AssyncScript.php';
+    public const ASYNC_SCRIPT = '/app/src/Scripts/AsyncScript.php';
 
     /**
      * @param Lead $lead
@@ -28,7 +28,7 @@ class LeadsProcessing implements LeadsProcessingInterface
             );
 
             $pipes = [];
-            $command = 'php '.LeadsProcessing::ASSYNC_SCRIPT.' -f "'.$message.'"';
+            $command = 'php '.LeadsProcessing::ASYNC_SCRIPT.' -f "'.$message.'"';
             $process = proc_open($command, $descriptorspec, $pipes);
 
             return ['process' => $process, 'pipes' => $pipes];
@@ -38,29 +38,35 @@ class LeadsProcessing implements LeadsProcessingInterface
     }
 
     /**
-     * @param array
+     * @param array $decryptsAndPipes
+     * @return array
      */
-    public function closeAllProcess(array $descrsiptsAndPipes): void
+    public function closeAllProcess(array $decryptsAndPipes): array
     {
-        foreach ($descrsiptsAndPipes as $key) {
+        $exitCodes = [];
+        foreach ($decryptsAndPipes as $key) {
 
             $pipes = $key['pipes'];
             $process = $key['process'];
-            $meta_info = proc_get_status($process);
+            $metaInfo = proc_get_status($process);
 
             foreach ($pipes as $pipe) {
                 if (is_resource($pipe)) {
                 fclose($pipe);
                 }
             }
-            
-            $exit_code = proc_close($process);
-            $exit_code = $meta_info['running'] ? $exit_code : $meta_info['exitcode'];
+
+            $exitCode = proc_close($process);
+            $exitCode = $metaInfo['running'] ? $exitCode : $metaInfo['exitcode'];
+
+            $exitCodes[] = $exitCode;
         }
+
+        return $exitCodes;
     }
 
     /**
-     * @param Lead
+     * @param Lead $lead
      * @return string
      */
     private function getMessage(Lead $lead): string

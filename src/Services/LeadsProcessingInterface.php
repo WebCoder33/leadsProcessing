@@ -17,8 +17,9 @@ interface LeadsProcessingInterface
     public function process(Lead $lead): array;
 
     /**
-     * @param array
+     * @param array $decryptsAndPipes
+     * @return array
      */
-    public function closeAllProcess(array $descrsiptsAndPipes): void;
+    public function closeAllProcess(array $decryptsAndPipes): array;
 }
 
